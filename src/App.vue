@@ -2,18 +2,13 @@
 import { ref, computed, version } from 'vue'
 import { v4 as uuid } from 'uuid';
 
+import { Todo } from './interfaces/todo';
+import TodoCard from './components/TodoCard.vue';
+
 enum Filter {
   All = 'all',
   Open = 'open',
   Closed = 'closed'
-}
-
-interface Todo {
-  id: string,
-  createdAt: Date,
-  title: string,
-  description: string,
-  closed: boolean
 }
 
 const todoDraft = ref<Todo>({
@@ -48,7 +43,11 @@ function saveTodo(event: Event) {
   }
 }
 
-function changeStatus(todo: Todo) {
+function changeStatus(id: string) {
+  const todo = todos.value.find(todo => todo.id === id);
+  if(!todo) {
+    throw new Error(`Unable to fin todo with id: ${id}`);
+  } 
   todo.closed = !todo.closed;
 }
 
@@ -118,27 +117,13 @@ const filteredTodos = computed(() => {
           </select>
         </div>
       </div>
-      <article
+      <todo-card
         v-for="todo in filteredTodos"
         :key="todo.id"
-      >
-        <header class="position-relative">
-          <h1 class="remove-margin">
-            {{ todo.title }}
-          </h1>
-          <div class="float-right">
-            <button @click="changeStatus(todo)">
-              {{ todo.closed ? 'Open' : 'Close' }}
-            </button>
-            <button @click="deleteTodo(todo.id)">
-              Delete
-            </button>
-          </div>
-        </header>
-        <span>
-          {{ todo.description }}
-        </span>
-      </article>
+        :todo="todo"
+        @change-status="changeStatus"
+        @delete="deleteTodo"
+      />
     </section>
   </main>
 </template>
@@ -155,39 +140,8 @@ const filteredTodos = computed(() => {
   }
 }
 
-.remove-margin {
-  margin: 0;
-}
 
 main {
   padding: 0 var(--block-spacing-horizontal);
-}
-
-
-article {
-  margin-top: 0;
-
-  h1 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}
-
-.position-relative {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-};
-
-
-.float-right {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-
-  button {
-    margin: 0;
-  }
 }
 </style>
