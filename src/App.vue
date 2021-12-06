@@ -68,11 +68,9 @@ const filteredTodos = computed(() => {
 </script>
 
 <template>
-  <header>
-    <hgroup>
-      <h1>Basic Todo App</h1>
-      <small>A basic Todo App build with Vue {{ version }}</small>
-    </hgroup>
+  <header class="hgroup">
+    <h1>Basic Todo App</h1>
+    <small>A basic Todo App build with Vue {{ version }}</small>
   </header>
   <main>
     <form @submit="saveTodo">
@@ -140,8 +138,15 @@ const filteredTodos = computed(() => {
   }
 }
 
+.hgroup {
+  h1, h2, h3, h4, h5, h6 {
+    border-left: 0.25ch solid var(--primary-hover);
+    padding-left: 0.25ch;
+    margin-bottom: 0px;
+  }
+}
 
 main {
-  padding: 0 var(--block-spacing-horizontal);
+  padding: 0;
 }
 </style>
