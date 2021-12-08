@@ -81,7 +81,8 @@ export default defineComponent({
         closed: false,
         createdAt: new Date()
       }] as Todo[],
-      filter: 'all' as Filter
+      filter: 'all' as Filter,
+      version: version
     }
   },
   methods: {
