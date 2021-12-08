@@ -1,27 +1,19 @@
 <template>
   <article>
     <header class="position-relative">
-      <h1 class="remove-margin">
-        {{ todo.title }}
-      </h1>
+      <h1 class="remove-margin">{{ todo.title }}</h1>
       <div class="float-right">
-        <button @click="$emit('changeStatus', todo.id)">
-          {{ todo.closed ? 'Open' : 'Close' }}
-        </button>
-        <button @click="$emit('delete', todo.id)">
-          Delete
-        </button>
+        <button @click="$emit('changeStatus', todo.id)">{{ todo.closed ? 'Open' : 'Close' }}</button>
+        <button @click="$emit('delete', todo.id)">Delete</button>
       </div>
     </header>
-    <span>
-      {{ todo.description }}
-    </span>
+    <span>{{ todo.description }}</span>
   </article>
 </template>
 
 
 <script lang="ts">
-import { defineComponent, PropType  } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { Todo } from '../interfaces/todo';
 
 
@@ -31,7 +23,7 @@ export default defineComponent({
       // perform runtime validation
       return typeof payload === 'string'
     },
-    changeStatus(payload:  string ) {
+    changeStatus(payload: string) {
       return typeof payload === 'string'
     },
   },
@@ -59,10 +51,10 @@ article {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-};
+}
 
 .remove-margin {
-    margin: 0;
+  margin: 0;
 }
 
 .float-right {
